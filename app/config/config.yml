@@ -18,7 +18,8 @@ framework:
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: true }
-    #serializer:      { enable_annotations: true }
+    serializer:
+            enabled: true
     templating:
         engines: ['twig']
         #assets_version: SomeVersionScheme
@@ -89,3 +90,8 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: AppBundle\Entity\User
+
+
+fos_rest:
+    routing_loader:
+        default_format: json

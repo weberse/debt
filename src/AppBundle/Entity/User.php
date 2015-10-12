@@ -41,7 +41,7 @@ class User extends BaseUser
      *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="friend_id", referencedColumnName="id")}
      * )
-     * @var \Doctrine\Common\Collections\ArrayCollection
+     * @var User[]
      */
     protected $friends;
 
@@ -84,7 +84,7 @@ class User extends BaseUser
      */
     public function getFriends()
     {
-        return $this->friends->toArray();
+        return $this->friends;
     }
 
     /**

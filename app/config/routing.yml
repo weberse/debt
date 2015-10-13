@@ -6,5 +6,11 @@ fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
 users:
-    type:     rest
+    type: rest
+    prefix: /api
     resource: AppBundle\Controller\UsersController
+
+events:
+    type: rest
+    prefix: /api
+    resource: AppBundle\Controller\EventController

@@ -20,7 +20,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "doctrine/doctrine-migrations-bundle": "^1.0",
-        "friendsofsymfony/rest-bundle": "^1.7"
+        "friendsofsymfony/rest-bundle": "^1.7",
+        "nelmio/api-doc-bundle": "@dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

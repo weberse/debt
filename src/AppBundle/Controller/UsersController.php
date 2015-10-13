@@ -2,20 +2,84 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\User;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UsersController
+use AppBundle\Entity\User;
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations;
+use FOS\RestBundle\Util\Codes;
+use FOS\RestBundle\View\View;
+use FOS\RestBundle\Request\ParamFetcherInterface;
+
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+
+class UsersController extends FOSRestController
 {
     public function optionsUsersAction()
     {
-        return new User();
+        $user = new User();
+        $user->setEmail('asdasd');
+        return $user;
     } // "options_users" [OPTIONS] /users
 
-    public function getUsersAction()
+    /**
+     * List all users.
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   }
+     * )
+     *
+     * @Annotations\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing pages.")
+     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many pages to return.")
+     *
+     * @Annotations\View(
+     *  templateVar="pages"
+     * )
+     *
+     * @param Request               $request      the request object
+     * @param ParamFetcherInterface $paramFetcher param fetcher service
+     *
+     * @return array
+     */
+    public function getUsersAction(Request $request)
     {
-        return new Response(new User());
-    }
+        $user = $this->getUser();
+//        $user = new User();
+//        $user->setEmail('asdasd');
+        return array($user);
+    } // /api/users.json
+
+    /**
+     * List all friends.
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   }
+     * )
+     *
+     * @Annotations\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing pages.")
+     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many pages to return.")
+     *
+     * @Annotations\View(
+     *  templateVar="pages"
+     * )
+     *
+     * @param Request               $request      the request object
+     * @param ParamFetcherInterface $paramFetcher param fetcher service
+     *
+     * @return array
+     */
+    public function getFriendsAction(Request $request)
+    {
+        $user = $this->getUser();
+        return array($user->getFriends);
+    } // /api/users.json
 
     public function newUsersAction()
     {} // "new_users"     [GET] /users/new

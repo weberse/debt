@@ -3,13 +3,8 @@
 namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\Event;
 use AppBundle\Form\EventType;
-
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations;
 
@@ -20,17 +15,14 @@ use FOS\RestBundle\Controller\Annotations;
 class EventController extends FOSRestController
 {
     /**
-     * @Annotations\View(
-     *  templateVar="index"
-     * )
+     * @Annotations\View(templateVar="events")
      */
     public function getEventsAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $events = $em->getRepository('AppBundle:Event')->findAll();
 
-        $entities = $em->getRepository('AppBundle:Event')->findAll();
-
-        return array('entities' => $entities);
+        return $events;
     }
 
     /**
@@ -93,7 +85,7 @@ class EventController extends FOSRestController
      * Creates a new Event entity.
      *
      * @Annotations\View(
-     *  templateVar="pages"
+     *  templateVar="event"
      * )
      *
      */
@@ -154,8 +146,12 @@ class EventController extends FOSRestController
     /**
      * Finds and displays a Event entity.
      *
+     * @Annotations\View(
+     *  templateVar="deleteForm"
+     * )
+     *
      */
-    public function showAction($id)
+    public function getEventAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -164,20 +160,29 @@ class EventController extends FOSRestController
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Event entity.');
         }
-
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        );
+        $view = $this->view($entity, 200)
+            ->setTemplate("MyBundle:Category:show.html.twig")
+            ->setTemplateVar('products')
+            ->setTemplateData($deleteForm)
+        ;
+
+        return $this->handleView($view);
+
+
+        return $entity;
     }
 
     /**
      * Displays a form to edit an existing Event entity.
      *
+     * @Annotations\View(
+     *  templateVar="pages"
+     * )
+     *
      */
-    public function editAction($id)
+    public function editEventAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -207,19 +212,20 @@ class EventController extends FOSRestController
     private function createEditForm(Event $entity)
     {
         $form = $this->createForm(new EventType(), $entity, array(
-            'action' => $this->generateUrl('event_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
+            'action' => $this->generateUrl('update_event', array('id' => $entity->getId())),
+            'method' => 'PATCH',
         ));
 
         $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
+
     /**
      * Edits an existing Event entity.
      *
      */
-    public function updateAction(Request $request, $id)
+    public function updateEventAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -236,7 +242,7 @@ class EventController extends FOSRestController
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('event_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('get_event', array('id' => $id)));
         }
 
         return array(
@@ -245,11 +251,12 @@ class EventController extends FOSRestController
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a Event entity.
      *
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteEventAction(Request $request, $id)
     {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
@@ -266,7 +273,7 @@ class EventController extends FOSRestController
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('event'));
+        return $this->redirect($this->generateUrl('get_events'));
     }
 
     /**
@@ -279,7 +286,7 @@ class EventController extends FOSRestController
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('event_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('delete_event', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

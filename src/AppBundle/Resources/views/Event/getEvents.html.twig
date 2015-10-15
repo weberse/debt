@@ -2,19 +2,18 @@
 
 {% block body -%}
     <h1>Event list</h1>
-
     <table class="records_list">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Createdat</th>
+                <th>Created at</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
+        {% for entity in events %}
             <tr>
                 <td><a href="">{{ entity.id }}</a></td>
                 <td>{{ entity.name }}</td>
@@ -23,10 +22,10 @@
                 <td>
                 <ul>
                     <li>
-                        <a href="">show</a>
+                        <a href="{{ path('get_event', {id: entity.id}) }}">show</a>
                     </li>
                     <li>
-                        <a href="">edit</a>
+                        <a href="{{ path('edit_event', {id: entity.id}) }}">edit</a>
                     </li>
                 </ul>
                 </td>
@@ -34,10 +33,9 @@
         {% endfor %}
         </tbody>
     </table>
-
-        <ul>
+    <ul>
         <li>
-            <a href="">
+            <a href="{{ path('new_events') }}">
                 Create a new entry
             </a>
         </li>

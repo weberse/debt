@@ -91,6 +91,11 @@ fos_user:
     firewall_name: main
     user_class: AppBundle\Entity\User
 
+easy_admin:
+    entities:
+        - AppBundle\Entity\User
+        - AppBundle\Entity\Event
+        - AppBundle\Entity\Bill
 
 fos_rest:
     param_fetcher_listener: true

@@ -24,3 +24,8 @@ events:
     prefix: /api
     resource: AppBundle\Controller\EventController
 
+bills:
+    type: rest
+    prefix: /api
+    resource: AppBundle\Controller\BillController
+

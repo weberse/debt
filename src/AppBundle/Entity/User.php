@@ -53,7 +53,7 @@ class User extends BaseUser
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Debt", mappedBy="bills")
+     * @ORM\OneToMany(targetEntity="Debt", mappedBy="user")
      */
     protected $debts;
 

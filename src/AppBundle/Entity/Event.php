@@ -167,5 +167,10 @@ class Event
     {
         $this->bills = $bills;
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 }
 

@@ -14,9 +14,17 @@ use Doctrine\ORM\Mapping as ORM;
 class Debt
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
      * @var User
      *
-     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="User", inversedBy="debts")
      * @ORM\JoinColumns({@ORM\JoinColumn(name="user_id", referencedColumnName="id")})
      */
@@ -25,7 +33,6 @@ class Debt
     /**
      * @var Bill
      *
-     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Bill", inversedBy="debts")
      * @ORM\JoinColumns({@ORM\JoinColumn(name="bill_id", referencedColumnName="id")})
      */
@@ -51,6 +58,22 @@ class Debt
      * @ORM\Column(name="price", type="integer")
      */
     protected $total;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     /**
      * @return User

@@ -204,5 +204,9 @@ class Bill
     {
         $this->createdAt = $createdAt;
     }
-}
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+}

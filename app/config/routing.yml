@@ -29,3 +29,8 @@ bills:
     prefix: /api
     resource: AppBundle\Controller\BillController
 
+debts:
+    type: rest
+    prefix: /api
+    resource: AppBundle\Controller\DebtController
+

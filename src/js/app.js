@@ -7,10 +7,10 @@ export default class App extends Component {
         let menu = this.props.menu;
         return (
             <Router>
-                <Route path="/" component={Webpage} >
-                    <Route path="webpage/:layout" component={Webpage} />
-                </Route>
+                <Route path="/" component={Main} />
             </Router>
         );
     }
 }
+
+React.render(<App /> ,document.getElementById('app'));

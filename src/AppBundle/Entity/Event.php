@@ -53,7 +53,7 @@ class Event
     /**
      * @var string
      *
-     * @ORM\Column(name="created_at", type="date")
+     * @ORM\Column(name="created_at", type="date", nullable=true)
      */
     private $createdAt;
 
@@ -150,6 +150,27 @@ class Event
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return Bill[]
+     */
+    public function getBills()
+    {
+        return $this->bills;
+    }
+
+    /**
+     * @param Bill[] $bills
+     */
+    public function setBills($bills)
+    {
+        $this->bills = $bills;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }
 

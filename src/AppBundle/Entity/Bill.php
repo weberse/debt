@@ -40,7 +40,7 @@ class Bill
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Debt", mappedBy="bills")
+     * @ORM\OneToMany(targetEntity="Debt", mappedBy="bill")
      */
     protected $debts;
 
@@ -72,8 +72,141 @@ class Bill
      */
     private $createdAt;
 
+
     public function __construct() {
         $this->getCreatedAt(new \DateTime());
     }
-}
 
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return Event
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+    /**
+     * @param Event $event
+     */
+    public function setEvent($event)
+    {
+        $this->event = $event;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getDebts()
+    {
+        return $this->debts;
+    }
+
+    /**
+     * @param ArrayCollection $debts
+     */
+    public function setDebts($debts)
+    {
+        $this->debts = $debts;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotal()
+    {
+        return $this->total;
+    }
+
+    /**
+     * @param int $total
+     */
+    public function setTotal($total)
+    {
+        $this->total = $total;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * @param string $comment
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param string $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+}
